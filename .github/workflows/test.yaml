@@ -33,7 +33,7 @@ jobs:
       - name: Run tests
         run: |
           source .venv/bin/activate
-          pytest --cov-report text --cov=.
+          pytest --cov-report xml --cov=.
       - name: Pytest coverage comment
         uses: MishaKav/pytest-coverage-comment@main
         with:
