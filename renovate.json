@@ -1,6 +1,40 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:base",
+    ":semanticPrefixFixDepsChoreOthers",
+    ":ignoreModulesAndTests",
+    ":autodetextPinVersions",
+    "group:recommended",
+    "workarounds:all",
+    "github>whitesource/merge-confidence:beta"
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true,
+    "automergeType": "pr",
+    "platformAutomerge": true
+  },
+  "semanticCommits": "enabled",
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": [
+      "vulnerability",
+      "security"
+    ]
+  },
+  "packageRules": [
+    {
+      "matchManagers": [
+        "poetry"
+      ],
+      "labels": [
+        "renovate",
+        "python"
+      ],
+      "patch": {
+        "enabled": false
+      }
+    }
   ]
 }
