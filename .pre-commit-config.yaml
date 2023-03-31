@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/psf/black
-    rev: 23.1.0
+    rev: 23.3.0
     hooks:
       - id: black
   - repo: https://github.com/pycqa/flake8
@@ -8,12 +8,12 @@ repos:
     hooks:
       - id: flake8
   - repo: https://github.com/norwoodj/helm-docs
-    rev: v1.2.0
+    rev: v1.11.0
     hooks:
       - id: helm-docs
         args:
           # Make the tool search for charts only under the `example-charts` directory
-          - --chart-search-root=deploy/helm/ecr-cleanup
+          - --chart-search-root=deploy/chart/ecr-cleanup
 
           # The `./` makes it relative to the chart-search-root set above
           - --template-files=./_templates.gotmpl

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ecr-image-cleanup-job"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["Hans Knecht <hknecht@cloudera.com>"]
 readme = "README.md"
