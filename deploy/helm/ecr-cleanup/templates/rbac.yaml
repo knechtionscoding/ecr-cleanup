@@ -1,0 +1,29 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: {{ .Release.Namespace }}
+  name: {{ .Values.cron.serviceAccount.name }}
+rules:
+- apiGroups: ["v1"]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+- apiGroups: ["apps/v1"]
+  resources: ["daemonsets ","deployments","statefulsets"]
+  verbs: ["get", "watch", "list"]
+- apiGroups: ["batch/v1"]
+  resources: ["jobs","cronjobs"]
+  verbs: ["get", "watch", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ .Values.cron.serviceAccount.name }}
+  namespace: {{.Release.Namespace}}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ .Values.cron.serviceAccount.name }}
+subjects:
+- namespace: {{.Release.Namespace}}
+  kind: ServiceAccount
+  name: {{ .Values.cron.serviceAccount.name }}

@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "ecr-image-cleanup-job"
+version = "0.1.0"
+description = ""
+authors = ["Hans Knecht <hknecht@cloudera.com>"]
+readme = "README.md"
+packages = []
+
+[tool.poetry.dependencies]
+python = "^3.11"
+boto3 = "^1.26.98"
+kubernetes = "^26.1.0"
+pytz = "^2022.7.1"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.2"
+black = "^23.1.0"
+pytest-cov = "^4.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

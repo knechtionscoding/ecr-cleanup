@@ -1,0 +1,42 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "ecr-cleanup.fullname" . }}
+  labels:
+    {{- include "ecr-cleanup.labels" . | nindent 4 }}
+spec:
+  schedule: "* 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          {{- with .Values.podAnnotations }}
+          annotations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          labels:
+            {{- include "ecr-cleanup.selectorLabels" . | nindent 12 }}
+        spec:
+          {{- with .Values.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          serviceAccountName: {{ include "ecr-cleanup.serviceAccountName" . }}
+          securityContext:
+            {{- toYaml .Values.podSecurityContext | nindent 12 }}
+          containers:
+            - name: main
+              image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+              imagePullPolicy: IfNotPresent
+              {{- if .Values.awsRegistryId }}
+              env:
+                - name: AWS_REGISTRY_ID
+                  value: {{ .Values.awsRegistryId }}
+              {{- end }}
+              command:
+                - /code/main.py
+              securityContext:
+                {{- toYaml .Values.securityContext | nindent 16 }}
+              resources:
+                {{- toYaml .Values.resources | nindent 16 }}
+          restartPolicy: OnFailure

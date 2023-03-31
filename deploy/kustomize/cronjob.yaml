@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cleanup-ecr
+spec:
+  schedule: "* 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: main
+              image: cleanup-ecr:1.0.0
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: REGISTRY_ID
+                  value: <ID>
+              command:
+                - /code/main.py
+          restartPolicy: OnFailure
