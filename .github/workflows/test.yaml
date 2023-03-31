@@ -34,7 +34,7 @@ jobs:
         run: |
           source .venv/bin/activate
           pytest
-          coverage report --format text > coverage.txt
+          poetry coverage report --format text > coverage.txt
       - name: Pytest coverage comment
         uses: MishaKav/pytest-coverage-comment@main
         with:
