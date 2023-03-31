@@ -6,7 +6,7 @@ image:
   # -- Image Registry
   registry: ghcr.io
   # -- Image Repository
-  repository: ecr-cleanup/ecr-cleanup
+  repository: knechtionscoding/ecr-cleanup
   # -- Pull Policy for images in cronjob
   pullPolicy: IfNotPresent
   # -- Overrides the image tag whose default is the chart appVersion.
