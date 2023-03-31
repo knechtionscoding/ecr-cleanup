@@ -311,7 +311,7 @@ def delete_image(client: boto3.client, image: dict):  # pragma: no cover
         )
 
 
-def main():
+def main():  # pragma: no cover
     deletable_images = []
     keepable_images = []
     config.load_kube_config()
@@ -343,5 +343,5 @@ def main():
         delete_image(client, image)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     main()
