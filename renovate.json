@@ -4,7 +4,7 @@
     "config:base",
     ":semanticPrefixFixDepsChoreOthers",
     ":ignoreModulesAndTests",
-    ":autodetextPinVersions",
+    ":autodetectPinVersions",
     "group:recommended",
     "workarounds:all",
     "github>whitesource/merge-confidence:beta"
