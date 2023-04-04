@@ -8,6 +8,9 @@
         "fullnameOverride": {
             "type": "string"
         },
+        "schedule": {
+            "type": "string"
+        },
         "image": {
             "type": "object",
             "properties": {
