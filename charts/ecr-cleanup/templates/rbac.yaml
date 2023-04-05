@@ -1,29 +1,29 @@
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+kind: ClusterRole
 metadata:
-  namespace: {{ .Release.Namespace }}
   name: {{ .Values.serviceAccount.name }}
 rules:
-- apiGroups: ["v1"]
+- apiGroups: [""]
   resources: ["pods"]
   verbs: ["get", "watch", "list"]
-- apiGroups: ["apps/v1"]
-  resources: ["daemonsets ","deployments","statefulsets"]
+- apiGroups: ["apps"]
+  resources: ["daemonsets","deployments","statefulsets"]
   verbs: ["get", "watch", "list"]
-- apiGroups: ["batch/v1"]
+- apiGroups: ["batch"]
   resources: ["jobs","cronjobs"]
   verbs: ["get", "watch", "list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
+# This cluster role binding allows anyone in the "manager" group to
+# read secrets in any namespace.
+kind: ClusterRoleBinding
 metadata:
   name: {{ .Values.serviceAccount.name }}
-  namespace: {{.Release.Namespace}}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
+  kind: ClusterRole
   name: {{ .Values.serviceAccount.name }}
 subjects:
-- namespace: {{.Release.Namespace}}
-  kind: ServiceAccount
+- kind: ServiceAccount
   name: {{ .Values.serviceAccount.name }}
+  namespace: {{.Release.Namespace}}
