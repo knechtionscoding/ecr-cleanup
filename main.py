@@ -314,7 +314,10 @@ def delete_image(client: boto3.client, image: dict):  # pragma: no cover
 def main():  # pragma: no cover
     deletable_images = []
     keepable_images = []
-    config.load_kube_config()
+    try:
+        config.load_kube_config()
+    except config.config_exception.ConfigException:
+        config.load_incluster_config()
 
     client = boto3.client("ecr")
     if os.getenv("AWS_REGISTRY_ID"):
