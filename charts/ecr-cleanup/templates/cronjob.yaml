@@ -33,7 +33,7 @@ spec:
                 - name: AWS_REGISTRY_ID
                   value: "{{ .Values.awsRegistryId }}"
               {{- end }}
-              command: {{- .Values.command }}
+              command: {{ .Values.command }}
               securityContext:
                 {{- toYaml .Values.securityContext | nindent 16 }}
               resources:
