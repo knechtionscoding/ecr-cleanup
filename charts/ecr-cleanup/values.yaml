@@ -14,7 +14,7 @@ image:
   tag: ""
 
 # -- ECR Registry ID to override picking the default
-awsRegistryId:
+awsRegistryId: ""
 
 # -- List of imagePullSecrets to use when getting images
 imagePullSecrets: []
