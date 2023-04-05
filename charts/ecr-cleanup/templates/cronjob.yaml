@@ -28,13 +28,12 @@ spec:
             - name: main
               image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
               imagePullPolicy: IfNotPresent
-              {{- if .Values.awsRegistryId }}
+              {{- if or .Values.awsRegistryId .Values.env}}
               env:
                 - name: AWS_REGISTRY_ID
                   value: "{{ .Values.awsRegistryId }}"
               {{- end }}
-              command:
-                - /code/main.py
+              command: {{- .Values.command }}
               securityContext:
                 {{- toYaml .Values.securityContext | nindent 16 }}
               resources:

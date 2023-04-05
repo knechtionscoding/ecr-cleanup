@@ -8,8 +8,8 @@
         "fullnameOverride": {
             "type": "string"
         },
-        "schedule": {
-            "type": "string"
+        "command": {
+            "type": "array"
         },
         "image": {
             "type": "object",
@@ -42,6 +42,9 @@
         },
         "resources": {
             "type": "object"
+        },
+        "schedule": {
+            "type": "string"
         },
         "securityContext": {
             "type": "object"
