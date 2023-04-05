@@ -6,7 +6,7 @@ lint: install
 	pre-commit run --all
 
 test: lint
-	pytest -v
+	poetry run pytest -v
 
 run:
 	poetry run ./main.py

@@ -13,7 +13,6 @@ hdlr = logging.StreamHandler()
 logger.addHandler(hdlr)
 # logger.addHandler(fhdlr)
 logger.setLevel(level=os.environ.get("LOG_LEVEL", "INFO").upper())
-logger = logging.getLogger("ecr-image-cleanup")
 
 # Set a standard Global Localization
 UTC = pytz.UTC
