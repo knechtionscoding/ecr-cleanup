@@ -11,6 +11,9 @@
         "command": {
             "type": "array"
         },
+        "dryRun": {
+            "type": "boolean"
+        },
         "image": {
             "type": "object",
             "properties": {

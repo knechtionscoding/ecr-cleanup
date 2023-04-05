@@ -16,6 +16,9 @@ image:
 # -- ECR Registry ID to override picking the default
 awsRegistryId: ""
 
+# -- Should the tool run in dryrun
+dryRun: false
+
 # -- List of imagePullSecrets to use when getting images
 imagePullSecrets: []
 # -- Overriding the Name

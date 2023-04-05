@@ -28,11 +28,13 @@ spec:
             - name: main
               image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
               imagePullPolicy: IfNotPresent
-              {{- if or .Values.awsRegistryId .Values.env}}
               env:
                 - name: AWS_REGISTRY_ID
                   value: "{{ .Values.awsRegistryId }}"
-              {{- end }}
+                {{- if .Values.dryRun }}
+                - name: DRY_RUN
+                  value: "{{ .Values.dryRun }}"
+                {{- end }}
               command: {{ .Values.command }}
               securityContext:
                 {{- toYaml .Values.securityContext | nindent 16 }}
