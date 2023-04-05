@@ -31,7 +31,7 @@ spec:
               {{- if .Values.awsRegistryId }}
               env:
                 - name: AWS_REGISTRY_ID
-                  value: {{ .Values.awsRegistryId }}
+                  value: "{{ .Values.awsRegistryId }}"
               {{- end }}
               command:
                 - /code/main.py
