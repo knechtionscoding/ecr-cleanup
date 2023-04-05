@@ -7,6 +7,15 @@ This cleans up an ECR repo based on the following rules.
 3. Has the container been tagged with the word `keep`
 4. Is the container the only tag in the ECR repository
 
+## Deployment
+
+### Helm
+
+```bash
+helm repo add knechtionscoding https://knechtionscoding.github.io/ecr-cleanup/ && helm repo update
+helm install ecr-cleanup knechtionscoding/ecr-cleanup --set awsRegistryId=<accountId>
+```
+
 ## Development
 
 ### Pre-Requisites
