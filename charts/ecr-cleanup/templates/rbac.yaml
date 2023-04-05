@@ -2,7 +2,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   namespace: {{ .Release.Namespace }}
-  name: {{ .Values.cron.serviceAccount.name }}
+  name: {{ .Values.serviceAccount.name }}
 rules:
 - apiGroups: ["v1"]
   resources: ["pods"]
@@ -17,13 +17,13 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ .Values.cron.serviceAccount.name }}
+  name: {{ .Values.serviceAccount.name }}
   namespace: {{.Release.Namespace}}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: {{ .Values.cron.serviceAccount.name }}
+  name: {{ .Values.serviceAccount.name }}
 subjects:
 - namespace: {{.Release.Namespace}}
   kind: ServiceAccount
-  name: {{ .Values.cron.serviceAccount.name }}
+  name: {{ .Values.serviceAccount.name }}
