@@ -19,6 +19,9 @@ awsRegistryId: ""
 # -- Should the tool run in dryrun
 dryRun: false
 
+# -- Configure Log level of application
+logLevel: INFO
+
 # -- List of imagePullSecrets to use when getting images
 imagePullSecrets: []
 # -- Overriding the Name
