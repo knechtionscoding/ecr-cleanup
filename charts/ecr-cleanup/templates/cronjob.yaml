@@ -37,7 +37,9 @@ spec:
                 - name: DRY_RUN
                   value: "{{ .Values.dryRun }}"
                 {{- end }}
-
+                {{- with .Values.extraEnvs }}
+                {{- . | toYaml | nindent 16 }}
+                {{- end }}
               command: {{ .Values.command }}
               securityContext:
                 {{- toYaml .Values.securityContext | nindent 16 }}
