@@ -75,4 +75,4 @@ resources:
   #   memory: 128Mi
 
 ## -- ENV variables to pass to cronjob
-extraEnvs: {}
+extraEnvs: []

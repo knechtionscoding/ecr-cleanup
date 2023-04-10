@@ -16,7 +16,7 @@
         },
         "extraEnvs": {
             "type": [
-                "object",
+                "array",
                 "null"
             ]
         },
