@@ -176,6 +176,18 @@ def get_ecr_images(
                 logger.info(
                     f"Image {repository['repository_uri']}@{imageDetails[0]['imageDigest']} is the only image in the repository skipping"
                 )
+                if "lastRecordedPullTime" in imageDetails:
+                    last_pull_time = imageDetails["lastRecordedPullTime"]
+                    localized_now_ts = UTC.localize(datetime.now() - timedelta(7))
+                    if last_pull_time > localized_now_ts:
+                        logger.debug("The last pulltime was more than 7 days ago")
+                        logger.info(
+                            f"Image {repository['repository_uri']}@{imageDetails[0]['imageDigest']} is the only image in the repository skipping and hasn't been pulled in 7 days, consider deleting"
+                        )
+                else:
+                    logger.info(
+                        f"Image {repository['repository_uri']}@{imageDetails[0]['imageDigest']} is the only image in the repository skipping and hasn't been pulled in 7 days, consider deleting"
+                    )
                 break
             images = append_image(images, imageDetails, repository)
 
