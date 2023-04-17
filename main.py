@@ -195,6 +195,31 @@ def get_ecr_images(
     return images
 
 
+def is_image_pushed_recently(image: dict) -> bool:
+    """
+    :param image dict: image details
+    Checks to see if the image has been pushed in the last 7 days
+    :return bool: if the image has been pushed in the last 7 days True will be returned
+    """
+    logging.debug("Checking if the image has been pushed recently")
+    logger.debug(f"{image=}")
+    if "imagePushedAt" in image:
+        last_pull_time = image["imagePushedAt"]
+        localized_now_ts = UTC.localize(datetime.now() - timedelta(7))
+        logger.debug(last_pull_time)
+        logger.debug(localized_now_ts)
+        if last_pull_time > localized_now_ts:
+            logger.debug("The last pulltime was more than 7 days ago")
+            return True
+        else:
+            return False
+    else:
+        logger.info(
+            f"There is no imagePushedAt because the {image['image_uri']} has something terribly wrong with it"
+        )
+        return False
+
+
 def is_image_pulled_recently(image: dict) -> bool:
     """
     :param image dict: image details
@@ -283,7 +308,8 @@ def is_image_deletable(image: dict, k8s_images: list) -> bool:
     # TODO: Make it handle multiple tags
 
     if (
-        is_image_referenced(image, k8s_images)
+        is_image_pushed_recently(image)
+        or is_image_referenced(image, k8s_images)
         or is_image_pulled_recently(image)
         or is_image_tagged_keep(image)
     ):

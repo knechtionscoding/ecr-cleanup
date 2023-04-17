@@ -149,6 +149,31 @@ def test_is_image_pulled_recently(image, result):
     "image,result",
     [
         (
+            {
+                "imagePushedAt": UTC.localize(datetime.now() - timedelta(2)),
+            },
+            True,
+        ),
+        (
+            {
+                "imagePushedAt": UTC.localize(datetime.now() - timedelta(10)),
+            },
+            False,
+        ),
+        (
+            {"image_uri": "test"},
+            False,
+        ),
+    ],
+)
+def test_is_image_pushed_recently(image, result):
+    assert (main.is_image_pushed_recently(image)) == result
+
+
+@pytest.mark.parametrize(
+    "image,result",
+    [
+        (
             {"imageTags": ["keep"], "image_uri": "test"},
             True,
         ),

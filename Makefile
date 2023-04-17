@@ -11,6 +11,9 @@ test: lint
 run:
 	poetry run ./main.py
 
+push: test
+	git push
+
 dry-run:
 	DRY_RUN=true poetry run ./main.py
 
