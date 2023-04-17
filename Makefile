@@ -12,7 +12,7 @@ run:
 	poetry run ./main.py
 
 push: test
-	git push
+	git push all main
 
 dry-run:
 	DRY_RUN=true poetry run ./main.py
