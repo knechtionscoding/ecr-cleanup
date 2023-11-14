@@ -9,7 +9,7 @@ packages = []
 [tool.poetry.dependencies]
 python = "^3.11"
 boto3 = "^1.26.98"
-kubernetes = "^27.0.0"
+kubernetes = "^28.0.0"
 pytz = "^2022.7.1"
 
 [tool.poetry.group.dev.dependencies]
