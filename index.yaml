@@ -3,6 +3,20 @@ entries:
   ecr-cleanup:
   - apiVersion: v2
     appVersion: 0.3.2
+    created: "2025-12-13T21:46:38.291790426Z"
+    description: 'Deploys a job that cleans up an ECR repo based on the following
+      rules. 1. Is a container currently referenced in the same K8s cluster that this
+      job is running in 2. Has the container been pulled in the last 7 days 3. Has
+      the container been tagged with the word `keep` 4. Is the container the only
+      tag in the ECR repository '
+    digest: 1f35b7a9e82d158759755c5e018a5db580b157ba64b6462515b45b33b803029f
+    name: ecr-cleanup
+    type: application
+    urls:
+    - https://github.com/knechtionscoding/ecr-cleanup/releases/download/ecr-cleanup-0.3.3/ecr-cleanup-0.3.3.tgz
+    version: 0.3.3
+  - apiVersion: v2
+    appVersion: 0.3.2
     created: "2023-04-11T19:43:13.869269499Z"
     description: 'Deploys a job that cleans up an ECR repo based on the following
       rules. 1. Is a container currently referenced in the same K8s cluster that this
@@ -141,4 +155,4 @@ entries:
     urls:
     - https://github.com/knechtionscoding/ecr-cleanup/releases/download/ecr-cleanup-0.2.2/ecr-cleanup-0.2.2.tgz
     version: 0.2.2
-generated: "2023-04-11T19:43:13.869301599Z"
+generated: "2025-12-13T21:46:38.29185149Z"
