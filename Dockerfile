@@ -9,20 +9,16 @@ ENV ENV=${ENV} \
     PIP_NO_CACHE_DIR=off \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
     PIP_DEFAULT_TIMEOUT=100 \
-    POETRY_VERSION=1.4.1
+    UV_PROJECT_ENVIRONMENT=/code/.venv \
+    PATH="/code/.venv/bin:${PATH}"
 
-# System deps:
-RUN pip install "poetry==$POETRY_VERSION"
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-# Copy only requirements to cache them in docker layer
 WORKDIR /code
-COPY poetry.lock pyproject.toml /code/
+COPY pyproject.toml /code/
 
-# Project initialization:
-RUN poetry config virtualenvs.create false \
-    && poetry install $(test "$ENV" == production && echo "--no-dev") --no-interaction --no-ansi
+RUN uv install --no-dev
 
-# Creating folders, and files for a project:
 COPY main.py /code
 
-CMD ["/code/main.py"]
+CMD ["python", "/code/main.py"]
