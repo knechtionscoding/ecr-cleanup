@@ -1,6 +1,7 @@
+from datetime import datetime, timedelta
+
 import main
 import pytest
-from datetime import datetime, timedelta
 import pytz
 
 UTC = pytz.UTC
@@ -35,7 +36,30 @@ UTC = pytz.UTC
         ),
         (
             {
+                "imageManifestMediaType": "application/vnd.docker.distribution.manifest.v2+json",
+                "artifactMediaType": "application/vnd.oci.image.config.v1+json",
+                "imageTags": ["test"],
+            },
+            {"repository_uri": "testing"},
+            {
+                "imageManifestMediaType": "application/vnd.docker.distribution.manifest.v2+json",
+                "artifactMediaType": "application/vnd.oci.image.config.v1+json",
+                "imageTags": ["test"],
+                "image_uri": "testing:test",
+            },
+        ),
+        (
+            {
                 "imageManifestMediaType": "test",
+                "imageTags": ["test"],
+            },
+            {"repository_uri": "testing"},
+            None,
+        ),
+        (
+            {
+                "imageManifestMediaType": "application/vnd.docker.distribution.manifest.v2+json",
+                "artifactMediaType": "application/vnd.dev.cosign.simplesigning.v1+json",
                 "imageTags": ["test"],
             },
             {"repository_uri": "testing"},
@@ -47,12 +71,80 @@ UTC = pytz.UTC
                 "imageTags": ["test"],
             },
             {"repository_uri": "testing"},
-            None,
+            {
+                "imageManifestMediaType": "application/vnd.oci.image.manifest.v1+json",
+                "imageTags": ["test"],
+                "image_uri": "testing:test",
+            },
         ),
     ],
 )
 def test_build_image_uri(image, repository, result):
     assert (main.build_image_uri(image, repository)) == result
+
+
+@pytest.mark.parametrize(
+    "image,result",
+    [
+        (
+            {
+                "imageManifestMediaType": "application/vnd.docker.distribution.manifest.v2+json"
+            },
+            True,
+        ),
+        (
+            {
+                "imageManifestMediaType": "application/vnd.docker.distribution.manifest.v2+json",
+                "artifactMediaType": "application/vnd.oci.image.config.v1+json",
+            },
+            True,
+        ),
+        (
+            {
+                "imageManifestMediaType": "application/vnd.oci.image.manifest.v1+json",
+                "artifactMediaType": "application/vnd.docker.container.image.v1+json",
+            },
+            True,
+        ),
+        (
+            {
+                "imageManifestMediaType": "application/vnd.oci.image.index.v1+json",
+            },
+            True,
+        ),
+        (
+            {
+                "imageManifestMediaType": "application/vnd.docker.distribution.manifest.list.v2+json",
+            },
+            True,
+        ),
+        (
+            {
+                "imageManifestMediaType": "application/vnd.docker.distribution.manifest.v2+json",
+                "artifactMediaType": "application/vnd.dev.cosign.simplesigning.v1+json",
+            },
+            False,
+        ),
+        (
+            {"imageManifestMediaType": "other"},
+            False,
+        ),
+    ],
+)
+def test_is_container_manifest(image, result):
+    assert main.is_container_manifest(image) == result
+
+
+@pytest.mark.parametrize(
+    "manifest,result",
+    [
+        ('{"subject": {"digest": "sha256:abc"}}', "sha256:abc"),
+        ('{"subject": {}}', None),
+        ("{}", None),
+    ],
+)
+def test_extract_subject_digest(manifest, result):
+    assert main.extract_subject_digest(manifest) == result
 
 
 @pytest.mark.parametrize(
@@ -112,7 +204,13 @@ def test_build_image_uri(image, repository, result):
                 }
             ],
             {"repository_uri": "testing"},
-            [],
+            [
+                {
+                    "imageManifestMediaType": "application/vnd.oci.image.manifest.v1+json",
+                    "imageTags": ["test"],
+                    "image_uri": "testing:test",
+                }
+            ],
         ),
     ],
 )
