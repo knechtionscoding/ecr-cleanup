@@ -22,7 +22,7 @@ helm install ecr-cleanup knechtionscoding/ecr-cleanup --set awsRegistryId=<accou
 ### Pre-Requisites
 
 - `pre-commit`
-- `poetry`
+- `uv`
 
 ### Running
 

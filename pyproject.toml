@@ -1,23 +1,38 @@
-[tool.poetry]
+[project]
 name = "ecr-image-cleanup-job"
 version = "0.3.4"
-description = ""
-authors = ["Hans Knecht <hknecht@cloudera.com>"]
+description = "Kubernetes-aware cleanup job for pruning unused AWS ECR images."
 readme = "README.md"
-packages = []
+requires-python = ">=3.11"
+authors = [{ name = "Hans Knecht", email = "hknecht@cloudera.com" }]
+dependencies = [
+    "boto3>=1.26.98",
+    "kubernetes>=28.0.0",
+    "pytz>=2022.7.1",
+]
 
-[tool.poetry.dependencies]
-python = "^3.11"
-boto3 = "^1.26.98"
-kubernetes = "^28.0.0"
-pytz = "^2022.7.1"
-
-[tool.poetry.group.dev.dependencies]
-pytest = "^7.2.2"
-black = "^23.1.0"
-pytest-cov = "^4.0.0"
-coverage = "^7.2.2"
+[project.optional-dependencies]
+dev = [
+    "coverage>=7.2.2",
+    "pytest>=7.2.2",
+    "pytest-cov>=4.0.0",
+    "ruff>=0.5.4",
+]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools>=67"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["main"]
+packages = []
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+ignore = ["E501"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
