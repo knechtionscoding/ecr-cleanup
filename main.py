@@ -260,7 +260,7 @@ def get_ecr_repositories(
 
 
 def get_ecr_images(
-    client: boto3.client, registry_id: str, repositories: list
+    client: boto3.client, registry_id: str, repositories: list, minimum_image_age: int
 ) -> tuple[list, dict]:  # pragma: no cover
     """
     :param client boto3.client:
@@ -283,9 +283,13 @@ def get_ecr_images(
                 )
                 if "lastRecordedPullTime" in imageDetails:
                     last_pull_time = imageDetails["lastRecordedPullTime"]
-                    localized_now_ts = UTC.localize(datetime.now() - timedelta(7))
+                    localized_now_ts = UTC.localize(
+                        datetime.now() - timedelta(minimum_image_age)
+                    )
                     if last_pull_time > localized_now_ts:
-                        logger.debug("The last pulltime was more than 7 days ago")
+                        logger.debug(
+                            f"The last pulltime was more than {minimum_image_age} days ago. Skipping image."
+                        )
                         logger.info(
                             f"Image {repository['repository_uri']}@{imageDetails[0]['imageDigest']} is the only image in the repository skipping and hasn't been pulled in 7 days, consider deleting"
                         )
@@ -476,6 +480,7 @@ def main():  # pragma: no cover
     except config.config_exception.ConfigException:
         config.load_incluster_config()
 
+    minimum_image_age: int = int(os.getenv("MINIMUM_IMAGE_AGE", "7"))
     client = boto3.client("ecr")
     if os.getenv("AWS_REGISTRY_ID"):
         registry_id = os.getenv("AWS_REGISTRY_ID")
@@ -488,7 +493,9 @@ def main():  # pragma: no cover
             )
             sys.exit(1)
     repositories = get_ecr_repositories(client, registry_id)
-    ecr_images, artifact_index = get_ecr_images(client, registry_id, repositories)
+    ecr_images, artifact_index = get_ecr_images(
+        client, registry_id, repositories, minimum_image_age
+    )
     k8s_images = get_images_from_workloads()
     for image in ecr_images:
         logger.debug(f"{image=}")

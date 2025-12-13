@@ -33,6 +33,8 @@ spec:
                   value: "{{ .Values.awsRegistryId }}"
                 - name: LOG_LEVEL
                   value: "{{ .Values.logLevel }}"
+                - name: MINIMUM_IMAGE_AGE
+                  value: "{{ .Values.minimumImageAge }}"
                 {{- if .Values.dryRun }}
                 - name: DRY_RUN
                   value: "{{ .Values.dryRun }}"

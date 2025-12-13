@@ -3,8 +3,8 @@
 This cleans up an ECR repo based on the following rules.
 
 1. Is a container currently referenced in the same K8s cluster that this job is running in
-1. Has the container been pushed in the last 7 days
-1. Has the container been pulled in the last 7 days
+1. Has the container been pushed in the last MINIMUM_IMAGE_AGE days (default: 7)
+1. Has the container been pulled in the last MINIMUM_IMAGE_AGE days (default: 7)
 1. Has the container been tagged with the word `keep`
 1. Is the container the only tag in the ECR repository
 
