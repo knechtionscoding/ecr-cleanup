@@ -2,7 +2,7 @@
 
 Deploys a job that cleans up an ECR repo based on the following rules.
 1. Is a container currently referenced in the same K8s cluster that this job is running in
-2. Has the container been pulled in the last 7 days
+2. Has the container been pulled in the last MINIMUM_IMAGE_AGE days (default: 7)
 3. Has the container been tagged with the word `keep`
 4. Is the container the only tag in the ECR repository
 
@@ -23,6 +23,7 @@ Deploys a job that cleans up an ECR repo based on the following rules.
 | image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | imagePullSecrets | list | `[]` | List of imagePullSecrets to use when getting images |
 | logLevel | string | `"INFO"` | Configure Log level of application |
+| minimumImageAge | int | `7` | Minimum image age in days to consider for cleanup |
 | nameOverride | string | `""` | Overriding the Name |
 | podAnnotations | object | `{}` | Annotations to add to the pod |
 | podSecurityContext | object | `{}` | Security Context for Pod |

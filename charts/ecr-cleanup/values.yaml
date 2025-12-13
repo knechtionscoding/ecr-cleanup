@@ -46,13 +46,11 @@ serviceAccount:
 podAnnotations: {}
 
 # -- Security Context for Pod
-podSecurityContext:
-  {}
+podSecurityContext: {}
   # fsGroup: 2000
 
 # -- Security Context for container in cronjob
-securityContext:
-  {}
+securityContext: {}
   # capabilities:
   #   drop:
   #   - ALL
@@ -61,8 +59,7 @@ securityContext:
   # runAsUser: 1000
 
 # -- Resources for container in cronjob
-resources:
-  {}
+resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -76,3 +73,6 @@ resources:
 
 ## -- ENV variables to pass to cronjob
 extraEnvs: []
+
+# -- Minimum image age in days to consider for cleanup
+minimumImageAge: 7
