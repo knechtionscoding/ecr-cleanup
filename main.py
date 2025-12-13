@@ -28,13 +28,13 @@ def build_image_uri(image: dict, repository: dict) -> dict:
         == "application/vnd.docker.distribution.manifest.v2+json"
     ):
         if "imageTags" in image:
-            image[
-                "image_uri"
-            ] = f"{repository['repository_uri']}:{image['imageTags'][0]}"
+            image["image_uri"] = (
+                f"{repository['repository_uri']}:{image['imageTags'][0]}"
+            )
         else:
-            image[
-                "image_uri"
-            ] = f"{repository['repository_uri']}@{image['imageDigest']}"
+            image["image_uri"] = (
+                f"{repository['repository_uri']}@{image['imageDigest']}"
+            )
         return image
     else:
         return None
@@ -313,10 +313,10 @@ def is_image_deletable(image: dict, k8s_images: list) -> bool:
         or is_image_pulled_recently(image)
         or is_image_tagged_keep(image)
     ):
-        logger.debug(f'{image["image_uri"]} is not deletable')
+        logger.debug(f"{image['image_uri']} is not deletable")
         return False
     else:
-        logger.debug(f'{image["image_uri"]} is deletable')
+        logger.debug(f"{image['image_uri']} is deletable")
         return True
 
 
