@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 python:3.14-alpine
+FROM --platform=linux/amd64 python:3.15-alpine
 
 ARG ENV=production
 
