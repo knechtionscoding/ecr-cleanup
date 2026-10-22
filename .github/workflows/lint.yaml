@@ -9,7 +9,7 @@ jobs:
       - name: Check out source repository
         uses: actions/checkout@v7
       - name: Set up Python environment
-        uses: actions/setup-python@v7.0.0
+        uses: actions/setup-python@v7.1.0
         with:
           python-version: "3.15"
       - name: Install uv
